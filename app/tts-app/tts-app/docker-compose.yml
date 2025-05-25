@@ -1,0 +1,22 @@
+version: "3"
+name: dify  # 指定 Stack 名称，即项目名称，这里把静态服务器归为工具utils项目，不指定就是当前文件夹的名称
+services:
+  ttsapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ttsapi
+    restart: always
+    expose:
+      - "5000"
+    volumes:
+      - ../:/app  # 共享卷
+    command: >  # >符号，多行内容合并为单行，换行符会被替换为空格
+      sh -c "pip install --no-cache-dir -r requirements.txt &&
+             python tts_ws.py"
+    networks:
+      - dify
+      
+networks:
+  dify:
+    external: true

@@ -1,0 +1,5 @@
+websocket-client==1.6.2
+fastapi==0.95.2
+uvicorn==0.22.0
+python-dotenv==1.0.0
+pytz==2023.3

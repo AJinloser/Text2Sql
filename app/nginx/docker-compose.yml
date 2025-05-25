@@ -1,0 +1,25 @@
+version: "3"
+name: dify  # 指定 Stack 名称，即项目名称，这里把静态服务器归为工具utils项目，不指定就是当前文件夹的名称
+services:
+  nginx:
+    image: nginx
+    container_name: nginx-server  # 指定容器名称，不指定就是（当前文件夹-image名称-序号）组成的名称
+    restart: always
+    ports:
+      - "8000:80"
+      - "4430:443" # 暴露 HTTPS 端口
+    volumes:
+      - ../:/usr/share/nginx/html
+      - ./certs:/etc/nginx/ssl
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./mime.types:/etc/nginx/mime.types
+    # depends_on:  # 确保启动nginx前先启动ttsapi服务
+      # - ttsapi
+    dns:
+      - 8.8.8.8
+    networks:
+      - dify
+      
+networks:
+  dify:
+    external: true
